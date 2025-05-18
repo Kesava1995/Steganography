@@ -164,11 +164,9 @@ def remove_image():
         canvas.delete(image_id)
         status_label.config(text=f"Image Removed", fg="maroon", font=("Arial", 10, "bold"))
     image_id=None
-def quit_action():
-    print("Quit action triggered!")
-    root.destroy()
 def padded_label(label, shortcut, width=25):
     return f"{label.ljust(width)}{shortcut}"
+
 # Initialize Tkinter
 root = TkinterDnD.Tk()
 root.title("Image Code")
@@ -177,12 +175,14 @@ root.configure(bg="light yellow")
 selected_image_path = None
 global image_id
 image_id=None
+
 #Shortcuts
 root.bind("<Control-d>", lambda event: decode_message())
 root.bind("<Control-e>", lambda event: encode_message())
-root.bind("<Control-q>", lambda event: quit_action())
+root.bind("<Control-q>", lambda event: root.destroy())
 root.bind("<Control-i>", lambda event: select_image())
 root.bind("<Control-r>", lambda event: remove_image())
+
 #About
 def about():
     # Create a new top-level window
@@ -203,7 +203,7 @@ file_menu.add_command(label=padded_label("Remove Image","Ctrl+R"), command=remov
 file_menu.add_command(label=padded_label("Encode","Ctrl+E"), command=encode_message)
 file_menu.add_command(label=padded_label("Decode","Ctrl+D"), command=decode_message)
 file_menu.add_separator()
-file_menu.add_command(label=padded_label("Exit","Ctrl+Q"), command=quit_action)
+file_menu.add_command(label=padded_label("Exit","Ctrl+Q"), command=root.destroy)
 menu_bar.add_cascade(label="File", menu=file_menu)
 
 info = tk.Menu(menu_bar, tearoff=0)
